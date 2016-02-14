@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	
+<h:head>
+	<meta charset="UTF-8"/>
+	<title>Field Management</title>
+	<h:outputStylesheet library="nfracgen" name="estilo.css" />
+</h:head>
+
+
+<h:body>
+
+	<h1>NFracGen Webservice - developed by rafaelfvcs</h1>
+	
+	
+	<h:form>
+	
+		<p:growl id="messages"/>
+	 
+	    <p:menubar>
+	    
+	        <p:submenu label="File" icon="ui-icon-document">
+	            <p:submenu label="New" icon="ui-icon-contact">
+	                <p:menuitem value="Project" url="#" />
+	                <p:menuitem value="Other" url="#" />
+	            </p:submenu>
+	            <p:menuitem value="Open" url="#" />
+	            <p:separator />
+	            <p:menuitem value="Quit" url="#" />
+	        </p:submenu>
+	 
+	        <p:submenu label="Edit" icon="ui-icon-pencil">
+	            <p:menuitem value="Undo" url="#" icon="ui-icon-arrowreturnthick-1-w" />
+	            <p:menuitem value="Redo" url="#" icon="ui-icon-arrowreturnthick-1-e" />
+	        </p:submenu>
+	 
+	        <p:submenu label="Help" icon="ui-icon-help">
+	            <p:menuitem value="Contents" url="#" />
+	            <p:submenu label="Search" icon="ui-icon-search">
+	                <p:submenu label="Text">
+	                    <p:menuitem value="Workspace" url="#" />
+	                </p:submenu>
+	                <p:menuitem value="File" url="#" />
+	            </p:submenu>
+	        </p:submenu>
+	 
+	        <p:submenu label="Actions" icon="ui-icon-gear">
+	            <p:submenu label="Ajax" icon="ui-icon-refresh">
+	                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" update="messages"/>
+	                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" update="messages"/>
+	            </p:submenu>
+	            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
+	                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close" update="messages" ajax="false"/>
+	            </p:submenu>
+	        </p:submenu>
+	 
+	        <p:menuitem value="Quit" url="http://www.nfracgen.com" icon="ui-icon-close" />
+	 
+	        <f:facet name="options">
+	            <p:inputText style="margin-right:10px" placeholder="Search"/>
+	            <p:commandButton type="button" value="Sair" icon="ui-icon-extlink" />
+	        </f:facet>
+	    </p:menubar>
+		
+		<p:stack icon="resources/nfracgen/fichario.png" expanded="false" >
+		    <p:menuitem value="Coleta" icon="/resources/nfracgen/fichario.png" url="#" />
+		    <p:menuitem value="Análise" icon="/resources/nfracgen/analise.png" url="#"/>
+		    <p:menuitem value="Modelagem" icon="resources/nfracgen/simulacao.png" url="#"/>
+		    
+		</p:stack>
+		
+		
+		
+		
+		<p:panel>
+			<p:panelGrid columns="2">
+			<p:outputLabel value="Project Name:"/>
+			<p:inputText />
+			
+			<p:outputLabel value="Type of Study:"/>
+			<p:inputText />
+			
+			<p:outputLabel value="Data do estudo" />
+			<p:calendar id="data-fundacao" size="10"
+				pattern="dd/MM/yyyy" mask="99/99/9999" />
+			
+			
+			
+			</p:panelGrid>
+		</p:panel>
+		
+		
+		
+		
+		<p:accordionPanel>
+        <p:tab title="COLETA de dados de Campo">
+            
+		  <h:form>     
+		    <p:growl id="messages" showDetail="true" />
+		 
+			    <p:toolbar>
+			        <f:facet name="left">
+			            <p:commandButton type="button" value="New" icon="ui-icon-document" />
+			 
+			            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
+			 
+			            <span class="ui-separator">
+			                <span class="ui-icon ui-icon-grip-dotted-vertical" />
+			            </span>
+			 
+			            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
+			            <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
+			            <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+			        </f:facet>
+			 
+			        <f:facet name="right">
+			            <p:menuButton value="Options">
+			                <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-disk" />
+			                <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
+			                <p:menuitem value="Delete" actionListener="#{toolbarView.delete}" ajax="false" icon="ui-icon-close" />
+			                <p:menuitem value="Homepage" url="http://www.nfracgen.com" icon="ui-icon-extlink" />
+			            </p:menuButton>
+			        </f:facet>
+			    </p:toolbar>
+			    
+			    <p:dataTable value="" var="empresa"
+					emptyMessage="Nenhum campo cadastrada." rows="10" paginator="true"
+					paginatorPosition="bottom">
+					
+					<p:column headerText="Campo UFPE" sortBy="">
+						<h:outputText value="" />
+					</p:column>
+					
+					<p:column headerText="Objetivo" width="450">
+						<h:outputText value="" />
+					</p:column>
+					
+					<p:column headerText="Data" width="150">
+						<h:outputText value="" />
+					</p:column>
+					
+					<p:column headerText="Dados" width="150">
+						<h:outputText value="" />
+					</p:column>
+					
+					<p:column headerText="Banco de Dados" width="150">
+						<h:outputText value="" />
+					</p:column>
+					
+					
+		
+				</p:dataTable>
+				
+			</h:form>
+            
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage library="nfracgen" name="Coleta_de_dados.jpg" width="150"/>
+                <h:outputText
+                    value="Coleta de dados em campo. Tipo de armazenamento de dados autenticado." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="ANÁLISE">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <h:outputText value="Francis Ford Coppola's legendary..." />
+            </h:panelGrid>
+        
+        
+        </p:tab>
+        <p:tab title="MODELAGEM">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+        <p:tab title="SIMULAÇÃO">
+            <h:panelGrid columns="2" cellpadding="10">
+                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
+                <h:outputText value="After a break of more than 15 years..." />
+            </h:panelGrid>
+        </p:tab>
+    
+    
+    </p:accordionPanel>
+    
+    
+	</h:form>
+
+
+
+
+
+
+</h:body>
+</html>
