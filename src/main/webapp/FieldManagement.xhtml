@@ -6,7 +6,7 @@
 	
 <h:head>
 	<meta charset="UTF-8"/>
-	<title>Field Management</title>
+	<title>NFracGenWeb</title>
 	<h:outputStylesheet library="nfracgen" name="estilo.css" />
 </h:head>
 
@@ -71,12 +71,18 @@
 		    <p:menuitem value="Modelagem" icon="resources/nfracgen/simulacao.png" url="#"/>
 		    
 		</p:stack>
+				
+	</h:form>
 		
+		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
 		
+		<p:separator />
 		
-		
+	<h:form>
 		<p:panel>
-			<p:panelGrid columns="2">
+			
+		
+			<p:panelGrid columns="2" >
 			<p:outputLabel value="Project Name:"/>
 			<p:inputText />
 			
@@ -87,7 +93,16 @@
 			<p:calendar id="data-fundacao" size="10"
 				pattern="dd/MM/yyyy" mask="99/99/9999" />
 			
+			<p:outputLabel value=""/>
 			
+			<h:panelGrid id="grid3" columns="3" cellpadding="3">
+				<p:commandButton value="Salvar" actionListener="#{messagesView.info}" />
+				<p:commandButton value="Carregar" actionListener="#{messagesView.error}" />
+				<p:commandButton value="Editar" actionListener="#{messagesView.fatal}" />
+			</h:panelGrid>
+			
+			<p:chart type="line" model="#{chartView.animatedModel1}" style="width:400px;" />
+   			<p:chart type="bar" model="#{chartView.animatedModel2}" style="width:400px;" />
 			
 			</p:panelGrid>
 		</p:panel>
@@ -96,7 +111,7 @@
 		
 		
 		<p:accordionPanel>
-        <p:tab title="COLETA de dados de Campo">
+        <p:tab title="COLETA de dados de Campo XXXX">
             
 		  <h:form>     
 		    <p:growl id="messages" showDetail="true" />
