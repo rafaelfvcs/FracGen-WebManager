@@ -8,7 +8,12 @@
 <h:head>
 	<meta charset="UTF-8"/>
 	<title>NFracGenWeb</title>
+	
+	<script type="text/javascript"
+      src="http://maps.google.com/maps/api/js?sensor=false">
+	</script>
 </h:head>
+
 
 
 <h:body>
@@ -17,6 +22,8 @@
 		<f:viewAction action="#{fieldTripCollectBean.consultar}" />
 	</f:metadata>
 
+	
+      
 	<h1>NFracGen Webservice - developed by rafaelfvcs</h1>
 	
 	<h:form id="form1">
@@ -260,14 +267,18 @@
 				</h:panelGrid>
 			</p:dialog>
 				
-				
             
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage library="nfracgen" name="Coleta_de_dados.jpg" width="150"/>
+                <p:graphicImage library="nfracgen" name="Coleta_de_dados.jpg" width="300"/>
                 <h:outputText
                     value="Coleta de dados em campo. Tipo de armazenamento de dados autenticado." />
             </h:panelGrid>
+            
+             
+            
         </h:form>
+        
+       
         
         
         </p:tab>
@@ -285,11 +296,16 @@
                 <h:outputText value="After a break of more than 15 years..." />
             </h:panelGrid>
         </p:tab>
+        
         <p:tab title="SIMULAÇÃO">
-            <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather3.jpg" />
-                <h:outputText value="After a break of more than 15 years..." />
-            </h:panelGrid>
+			    <p:mindmap value="#{mindmapView.root}" style="width: 100%;height: 600px;border: 1px solid black;">
+			        <p:ajax event="select" listener="#{mindmapView.onNodeSelect}" />
+			        <p:ajax event="dblselect" listener="#{mindmapView.onNodeDblselect}" update="output" oncomplete="PF('details').show();" />
+			    </p:mindmap>
+			 
+			    <p:dialog widgetVar="details" header="Node Details" resizable="false" modal="true" showEffect="fade" hideEffect="fade">
+			        <h:outputText id="output" value="#{mindmapView.selectedNode.data}" />
+			    </p:dialog>
         </p:tab>
     
     
