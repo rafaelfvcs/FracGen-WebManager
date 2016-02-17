@@ -1,24 +1,27 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
 	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui">
 	
 <h:head>
 	<meta charset="UTF-8"/>
 	<title>NFracGenWeb</title>
-	<h:outputStylesheet library="nfracgen" name="estilo.css" />
 </h:head>
 
 
 <h:body>
 
+	<f:metadata>
+		<f:viewAction action="#{fieldTripCollectBean.consultar}" />
+	</f:metadata>
+
 	<h1>NFracGen Webservice - developed by rafaelfvcs</h1>
 	
+	<h:form id="form1">
 	
-	<h:form>
-	
-		<p:growl id="messages"/>
+		<p:growl id="messages1"/>
 	 
 	    <p:menubar>
 	    
@@ -27,6 +30,7 @@
 	                <p:menuitem value="Project" url="#" />
 	                <p:menuitem value="Other" url="#" />
 	            </p:submenu>
+	            
 	            <p:menuitem value="Open" url="#" />
 	            <p:separator />
 	            <p:menuitem value="Quit" url="#" />
@@ -49,11 +53,11 @@
 	 
 	        <p:submenu label="Actions" icon="ui-icon-gear">
 	            <p:submenu label="Ajax" icon="ui-icon-refresh">
-	                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" update="messages"/>
-	                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" update="messages"/>
+	                <p:menuitem value="Save" actionListener="#{menuView.save}" icon="ui-icon-disk" update="messages1"/>
+	                <p:menuitem value="Update" actionListener="#{menuView.update}" icon="ui-icon-arrowrefresh-1-w" update="messages1"/>
 	            </p:submenu>
 	            <p:submenu label="Non-Ajax" icon="ui-icon-newwin">
-	                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close" update="messages" ajax="false"/>
+	                <p:menuitem value="Delete" actionListener="#{menuView.delete}" icon="ui-icon-close" update="messages1" ajax="false"/>
 	            </p:submenu>
 	        </p:submenu>
 	 
@@ -74,13 +78,14 @@
 				
 	</h:form>
 		
-		<p:messages id="messages" showDetail="true" autoUpdate="true" closable="true" />
+
+	<h:form id="form2">
+		
+		<p:messages id="messages2" showDetail="true" autoUpdate="true" closable="true" />
 		
 		<p:separator />
 		
-	<h:form>
 		<p:panel>
-			
 		
 			<p:panelGrid columns="2" >
 			<p:outputLabel value="Project Name:"/>
@@ -106,84 +111,173 @@
 			
 			</p:panelGrid>
 		</p:panel>
+		</h:form>
 		
 		
+	<h:form id="form3">
 		
-		
-		<p:accordionPanel>
-        <p:tab title="COLETA de dados de Campo XXXX">
+		<p:accordionPanel id="acp1">
+        
+        <p:tab title="COLETA de dados de Campo XXXX" id="colect-tab">
             
-		  <h:form>     
-		    <p:growl id="messages" showDetail="true" />
+		  <h:form id="frm4">     
+		    
+		    <p:growl id="messages3" showDetail="true" />
 		 
-			    <p:toolbar>
-			        <f:facet name="left">
-			            <p:commandButton type="button" value="New" icon="ui-icon-document" />
+			    <p:toolbar id="toolbar2">
+			        <f:facet name="left" >
+			            <p:commandButton value="New" icon="ui-icon-document" 
+				            title="Abrir novo arquivo"
+				            action="#{fieldTripCollectBean.prepararNovoField}"
+							process="@this" update="fieldtripN-dialog"
+							oncomplete="PF('editFieldTripDialog').show();">
+							<p:resetInput target="fieldtripN-dialog" />
+			            
+			            </p:commandButton>
 			 
-			            <p:commandButton type="button" value="Open" icon="ui-icon-folder-open" />
-			 
+			            <p:commandButton value="Open" icon="ui-icon-folder-open" 
+				            process="@this" update="fieldtripN-dialog"
+	            			oncomplete="PF('editFieldTripDialog').show()"
+	            			disabled="#{fieldTripCollectBean.fieldSelect == null}">
+	            			<p:resetInput target="fieldtripN-dialog" />
+		            		
+		            		<f:setPropertyActionListener value="#{fieldTripCollectBean.fieldSelect}" 
+	            				target="#{fieldTripCollectBean.fieldEdit}" />
+	            			</p:commandButton>
+				 
 			            <span class="ui-separator">
 			                <span class="ui-icon ui-icon-grip-dotted-vertical" />
 			            </span>
 			 
-			            <p:commandButton type="button" title="Save" icon="ui-icon-disk" />
-			            <p:commandButton type="button" title="Delete" icon="ui-icon-trash" />
-			            <p:commandButton type="button" title="Print" icon="ui-icon-print" />
+			            <p:commandButton  title="Load data" icon="ui-icon-arrow-1-n" />
+			            
+			            <p:commandButton  title="Delete" icon="ui-icon-trash"
+	            			process="@this" update="fieldtrips-table messages3 toolbar2"
+	            			action="#{fieldTripCollectBean.excluir}"
+	            			disabled="#{fieldTripCollectBean.fieldSelect == null}">
+	            		
+	            			<p:confirm icon="ui-icon-alert" header="Confirmação de exclusão"		
+            					message="Tem certeza que deseja excluir a empresa?" />
+	            		
+	            		</p:commandButton>	
+	            		
+	            		<p:confirmDialog global="true">
+							<p:commandButton value="Não" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>
+							<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
+						</p:confirmDialog>
+			            
+			            <p:commandButton  title="Print" icon="ui-icon-print" />
+			            
+            		
 			        </f:facet>
 			 
+			 		
 			        <f:facet name="right">
 			            <p:menuButton value="Options">
-			                <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages" icon="ui-icon-disk" />
-			                <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages" icon="ui-icon-arrowrefresh-1-w" />
+			                <p:menuitem value="Save" actionListener="#{toolbarView.save}" update="messages3" icon="ui-icon-disk" />
+			                <p:menuitem value="Update" actionListener="#{toolbarView.update}" update="messages3" icon="ui-icon-arrowrefresh-1-w" />
 			                <p:menuitem value="Delete" actionListener="#{toolbarView.delete}" ajax="false" icon="ui-icon-close" />
 			                <p:menuitem value="Homepage" url="http://www.nfracgen.com" icon="ui-icon-extlink" />
 			            </p:menuButton>
 			        </f:facet>
 			    </p:toolbar>
 			    
-			    <p:dataTable value="" var="empresa"
-					emptyMessage="Nenhum campo cadastrada." rows="10" paginator="true"
-					paginatorPosition="bottom">
+			    
+			    			    
+			    <p:dataTable value="#{fieldTripCollectBean.allFields}" var="fieldTrip"
+					emptyMessage="Nenhum campo cadastrada." rows="7" 
+					paginator="true" paginatorPosition="bottom"
+					style="margin-top: 10px" id="fieldtrips-table"
+					selection="#{fieldTripCollectBean.fieldSelect}"
+					selectionMode="single" rowKey="#{fieldTrip.id}">
 					
-					<p:column headerText="Campo UFPE" sortBy="">
-						<h:outputText value="" />
+					<p:ajax event="rowSelect" update=":form3:acp1:frm4:toolbar2" />
+					<p:ajax event="rowUnselect" update=":form3:acp1:frm4:toolbar2" />
+					
+					<p:column headerText="Nome do campo" sortBy="#{fieldTrip.fieldName}">
+						<h:outputText value="#{fieldTrip.fieldName}" />
 					</p:column>
 					
-					<p:column headerText="Objetivo" width="450">
-						<h:outputText value="" />
+					<p:column headerText="Tipo do campo" width="150">
+						<h:outputText value="#{fieldTrip.fieldtype}" />
 					</p:column>
 					
-					<p:column headerText="Data" width="150">
-						<h:outputText value="" />
+					<p:column headerText="Localização" width="150">
+						<h:outputText value="#{fieldTrip.localization}" />
 					</p:column>
 					
-					<p:column headerText="Dados" width="150">
-						<h:outputText value="" />
-					</p:column>
-					
-					<p:column headerText="Banco de Dados" width="150">
-						<h:outputText value="" />
+					<p:column headerText="Data" width="130">
+						<h:outputText value="#{fieldTrip.datecollect}" />
 					</p:column>
 					
 					
-		
+					<p:column headerText="Nome da equipe" width="110">
+						<h:outputText value="#{fieldTrip.teamname}" />
+					</p:column>
 				</p:dataTable>
 				
-			</h:form>
+				
+			<p:dialog header="Nova cam" widgetVar="editFieldTripDialog" id="fieldtripN-dialog"
+					resizable="false" modal="true" closeOnEscape="true">
+					
+				<p:messages id="msgs-dialog" />
+				
+				<p:defaultCommand target="salvar-button" scope="fieldtripN-dialog" />
+				
+				<h:panelGrid columns="2" id="painel-dialogN">
+					<p:outputLabel value="Nome do campo" for="fieldtrip-name" />
+					<p:inputText id="fieldtrip-name" size="60" maxlength="80" 
+						value="#{fieldTripCollectBean.fieldEdit.fieldName}" />
+					
+					<p:outputLabel value="Localizacao" for="localization" />
+					<p:inputText id="localization" size="60" maxlength="120"
+						value="#{fieldTripCollectBean.fieldEdit.localization}" />
+					
+					
+					<p:outputLabel value="Data campo" for="data-collect" />
+					<p:calendar id="data-collect" size="10"
+						value="#{fieldTripCollectBean.fieldEdit.datecollect}" 
+						pattern="dd/MM/yyyy" mask="99/99/9999" />
+						
+						 
+					<p:outputLabel value="Tipo do campo" for="field-type" />
+					<p:selectOneMenu id="field-type" value="#{fieldTripCollectBean.fieldEdit.fieldtype}">
+						<f:selectItem itemLabel="Selecione" />
+						<f:selectItems value="#{fieldTripCollectBean.fieldTypes}" var="tipo"
+							itemLabel="#{tipo.description}" itemValue="#{tipo}" />
+					</p:selectOneMenu>
+					
+					<p:outputLabel value="Equipe" for="field-team" />
+					<p:inputMask id="field-team" size="18" maxlength="18"
+						value="#{fieldTripCollectBean.fieldEdit.teamname}"
+						 />
+					
+					<p:outputLabel/>
+					<p:commandButton value="Salvar" id="salvar-button"
+						action="#{fieldTripCollectBean.salvar}"
+						process="fieldtripN-dialog" update="msgs-dialog fieldtrips-table"
+						oncomplete="if (!args.validationFailed) PF('editFieldTripDialog').hide()" />
+				</h:panelGrid>
+			</p:dialog>
+				
+				
             
             <h:panelGrid columns="2" cellpadding="10">
                 <p:graphicImage library="nfracgen" name="Coleta_de_dados.jpg" width="150"/>
                 <h:outputText
                     value="Coleta de dados em campo. Tipo de armazenamento de dados autenticado." />
             </h:panelGrid>
+        </h:form>
+        
+        
         </p:tab>
+        
+        
         <p:tab title="ANÁLISE">
             <h:panelGrid columns="2" cellpadding="10">
-                <p:graphicImage name="demo/images/godfather/godfather2.jpg" />
+                <p:graphicImage name="nfracgen/Coleta_de_dados.jpg" />
                 <h:outputText value="Francis Ford Coppola's legendary..." />
             </h:panelGrid>
-        
-        
         </p:tab>
         <p:tab title="MODELAGEM">
             <h:panelGrid columns="2" cellpadding="10">
@@ -203,10 +297,6 @@
     
     
 	</h:form>
-
-
-
-
 
 
 </h:body>
