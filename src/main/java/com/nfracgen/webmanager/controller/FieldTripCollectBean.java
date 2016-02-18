@@ -46,7 +46,7 @@ public class FieldTripCollectBean implements Serializable{
 		registerFieldTrip.salvar(fieldEdit);
 		consultar();
 		
-		messages.info("Empresa salva com sucesso!");
+		messages.info("Campo salvo com sucesso!");
 		
 		//atualiza os componetes caso tenhamos sucesso nas entradas de dados
 		RequestContext.getCurrentInstance().update(
@@ -57,7 +57,7 @@ public class FieldTripCollectBean implements Serializable{
 		registerFieldTrip.excluir(fieldSelect);
 		fieldSelect = null;
 		consultar();
-		messages.info("Empresa excluída com sucesso!");
+		messages.info("Campo excluído com sucesso!");
 	}
 	
 	public void consultar(){
