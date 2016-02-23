@@ -83,7 +83,7 @@
 		    
 		</p:stack>
 				
-	</h:form>
+	</h:form><!-- /main toolbar -->
 		
 
 	<h:form id="form2" >
@@ -150,8 +150,8 @@
 				    	</h:panelGrid>
 				    	
 				    	<p:selectManyCheckbox id="custom">
-				            <f:selectItem itemLabel="Item A" itemValue="Xbox One" />
-				            <f:selectItem itemLabel="Item B" itemValue="PS4" />
+				            <f:selectItem itemLabel="Item A" itemValue="Item A" />
+				            <f:selectItem itemLabel="Item B" itemValue="Item B" />
 				        </p:selectManyCheckbox>
 			    
 			    </p:layoutUnit>
@@ -215,10 +215,13 @@
 							<p:commandButton value="Sim" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>
 						</p:confirmDialog>
 			            
-			            <p:commandButton  title="Print" icon="ui-icon-print" />
+			            <p:commandButton  title="Export to Excel" icon="ui-icon-print" ajax="false"
+			            	immediate="true">
+			            	<p:dataExporter type="xls" target="fieldtrips-table" fileName="FieldTrips"/>
+			            </p:commandButton>
 			            
-			            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Map" onclick="PF('dlg').show();" />
-						<p:dialog id="gmapDialog" widgetVar="dlg" width="625" height="400" modal="true">
+			            <p:commandButton id="btn" type="button" icon="ui-icon-pin-s" value="Map" onclick="PF('dlg_map').show();" />
+						<p:dialog id="gmapDialog" widgetVar="dlg_map" width="625" height="400" modal="true">
 						    <p:gmap id="gmap" center="41.381542, 2.122893" zoom="15" type="HYBRID" style="width:100%;height:400px" />
 						</p:dialog>
             		
