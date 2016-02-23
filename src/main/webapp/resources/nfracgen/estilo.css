@@ -4,7 +4,8 @@ body {
 	font-size: 12px;
 	font-family: Arial, Helvetica, sans-serif;
 	margin: 0px;
-	font-weight: normal
+	font-weight: normal;
+	//background: #cf9;
 }
 
 header {
@@ -24,7 +25,9 @@ footer {
 	border-top: 1px solid #ccc;
 	padding: 5px 8px;
 	margin-top: 20px;
-	margin-bottom: 10px
+	margin-bottom: 10px;
+	
+	
 }
 
 h1 {
@@ -34,3 +37,17 @@ h1 {
 	margin: 0px;
 	margin-bottom: 10px
 }
+
+body #form2{
+	font-size: 14px;
+	margin: 5px;
+	//background: #cf9;
+}
+
+#teste{
+	font-size: 12px;
+	margin: 5px 500px;
+	
+}
+
+
