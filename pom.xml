@@ -12,7 +12,13 @@
 	
   <dependencies>
    
-   
+      <!-- File xls Excel -->
+   		<dependency>
+			<groupId>org.apache.poi</groupId>
+			<artifactId>poi</artifactId>
+			<version>3.10.1</version>
+		</dependency>
+		
       <!-- PrimeFaces -->
   		
   		<dependency>
