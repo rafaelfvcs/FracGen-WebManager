@@ -1,5 +1,6 @@
 package com.nfracgen.webmanager.model;
 
+import java.io.ObjectInputStream.GetField;
 import java.io.Serializable;
 import java.util.Date;
 
@@ -9,11 +10,15 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.NotEmpty;
+
+
 
 @Entity
 public class FieldTrip implements Serializable{
@@ -24,34 +29,38 @@ public class FieldTrip implements Serializable{
 	@GeneratedValue
 	private Long id;
 	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date createDate;
+	
+	@Temporal(TemporalType.TIMESTAMP)
+	private Date modifyDate;
+	
 	@NotEmpty
 	@Column(name = "field_name", nullable = false, length = 80)
 	private String fieldName;
 	
 	//TODO: change to goeolocalization Type
 	@NotEmpty
-	@Column(nullable = false, length = 20)
+	@Column(nullable = false, length = 80)
 	private String localization;
+	
+	//Name of collection team
+	@Column(name = "team_name", nullable = true, length = 80)
+	private String teamname;
+	
+	//---------------------------------------------novo ------------------- 
+	@Temporal(TemporalType.TIMESTAMP)
+	@Column(nullable = true)
+	private Date datecollect;
+	
+	@Column(name = "field_type", nullable = true, length = 80)
+	@Enumerated(EnumType.STRING)
+	private FieldType fieldtype;
 	
 	@Column(nullable = true, length = 50)
 	@Enumerated(EnumType.STRING)
 	private DataType datatype;
-	
-	@Column(name = "field_type", nullable = false, length = 80)
-	private FieldType fieltype;
-	
-	@Column(nullable = true, length = 30)
-	private String equipament;
-	
-	//Name of collection team
-	@Column(name = "team_name", nullable = false, length = 80)
-	private String teamname;
-	
-	@NotNull 
-	@Temporal(TemporalType.DATE)
-	private Date datecollect;
-
-	//private Date fieldperiod;
+		
 	
 	public Long getId() {
 		return id;
@@ -77,30 +86,6 @@ public class FieldTrip implements Serializable{
 		this.localization = localization;
 	}
 
-	public DataType getDatatype() {
-		return datatype;
-	}
-
-	public void setDatatype(DataType datatype) {
-		this.datatype = datatype;
-	}
-
-	public FieldType getFieltype() {
-		return fieltype;
-	}
-
-	public void setFieltype(FieldType fieltype) {
-		this.fieltype = fieltype;
-	}
-
-	public String getEquipament() {
-		return equipament;
-	}
-
-	public void setEquipament(String equipament) {
-		this.equipament = equipament;
-	}
-
 	public String getTeamname() {
 		return teamname;
 	}
@@ -108,7 +93,9 @@ public class FieldTrip implements Serializable{
 	public void setTeamname(String teamname) {
 		this.teamname = teamname;
 	}
-
+	
+	//-----
+	
 	public Date getDatecollect() {
 		return datecollect;
 	}
@@ -117,6 +104,50 @@ public class FieldTrip implements Serializable{
 		this.datecollect = datecollect;
 	}
 
+	public FieldType getFieldtype() {
+		return fieldtype;
+	}
+
+	public void setFieldtype(FieldType fieldtype) {
+		this.fieldtype = fieldtype;
+	}
+
+	public DataType getDatatype() {
+		return datatype;
+	}
+
+	public void setDatatype(DataType datatype) {
+		this.datatype = datatype;
+	}
+	
+	
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
+	public Date getModifyDate() {
+		return modifyDate;
+	}
+
+	public void setModifyDate(Date modifyDate) {
+		this.modifyDate = modifyDate;
+	}
+	
+	//PrePersist
+	@PrePersist
+	@PreUpdate
+	public void dateConfigCreateModify(){
+		this.modifyDate = new Date();
+		
+		if(this.createDate == null){
+			this.createDate = new Date();
+		}
+	}
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
